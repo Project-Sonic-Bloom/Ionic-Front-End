@@ -1,0 +1,7 @@
+{
+  "name": "Sonic-Bloom-Client",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

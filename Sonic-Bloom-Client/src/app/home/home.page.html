@@ -1,0 +1,35 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>home</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">home</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-grid>
+    <ion-card>
+      <ion-row>
+        <ion-col>
+          <ion-card>
+            <ion-card-header>
+              <b>Submit audio files for analysis</b>
+            </ion-card-header>
+            <ion-card-content>
+              <form (submit)="OnSubmit()">
+                <input type="file" (change)="onFileSelected($event)" accept="audio/*">
+                <ion-button type="submit">
+                  Submit
+                </ion-button>
+              </form>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+  </ion-grid>
+</ion-content>
