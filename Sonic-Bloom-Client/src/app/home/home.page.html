@@ -16,17 +16,23 @@
       <ion-row>
         <ion-col>
           <ion-card>
+            
             <ion-card-header>
               <b>Submit audio files for analysis</b>
             </ion-card-header>
+
             <ion-card-content>
-              <form (submit)="OnSubmit()">
-                <input type="file" (change)="onFileSelected($event)" accept="audio/*">
+              <!-- Event binding to call method from home.page.ts https://angular.dev/guide/templates/event-listeners -->
+              <form (submit)="onSubmit()">
+                <!-- Possible types of data https://www.w3schools.com/html/html_form_input_types.asp -->
+                <!-- Accept attribute https://www.w3schools.com/tags/att_input_accept.asp -->
+                <input type="file" accept="audio/*">
                 <ion-button type="submit">
                   Submit
                 </ion-button>
               </form>
             </ion-card-content>
+
           </ion-card>
         </ion-col>
       </ion-row>
