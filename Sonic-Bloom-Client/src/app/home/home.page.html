@@ -11,31 +11,39 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-grid>
-    <ion-card>
-      <ion-row>
-        <ion-col>
-          <ion-card>
-            
-            <ion-card-header>
-              <b>Submit audio files for analysis</b>
-            </ion-card-header>
+  <div class="flex_grid">
+    <div class="col_1">
+      <ion-card>
+        <ion-card-header>
+          <b>Submit CSV file for microphone</b>
+        </ion-card-header>
 
-            <ion-card-content>
-              <!-- Event binding to call method from home.page.ts https://angular.dev/guide/templates/event-listeners -->
-              <form (submit)="onSubmit()">
-                <!-- Possible types of data https://www.w3schools.com/html/html_form_input_types.asp -->
-                <!-- Accept attribute https://www.w3schools.com/tags/att_input_accept.asp -->
-                <input type="file" accept="audio/*">
-                <ion-button type="submit">
-                  Submit
-                </ion-button>
-              </form>
-            </ion-card-content>
+        <ion-card-content>
+          <!-- Event binding to call method from home.page.ts https://angular.dev/guide/templates/event-listeners -->
+          <form (submit)="onSubmit()">
+            <!-- Possible types of data https://www.w3schools.com/html/html_form_input_types.asp -->
+            <!-- Accept attribute https://www.w3schools.com/tags/att_input_accept.asp -->
+            <input type="file" accept="audio/*">
+            <ion-button type="submit">
+              Submit
+            </ion-button>
+          </form>
+        </ion-card-content>
+      </ion-card>
+    </div>
 
-          </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-card>
-  </ion-grid>
+    <div class="col_2">
+      <ion-card class="map_card">
+        <ion-card-header>
+          <b>Choose habbitat area</b>
+        </ion-card-header>
+
+        <ion-card-content class="map_card">
+          <iframe class="map_card"
+            src="https://www.openstreetmap.org/export/embed.html?bbox=-10.7981%2C51.3723%2C-5.2679%2C55.4342&amp;layer=mapnik"></iframe>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+
 </ion-content>
