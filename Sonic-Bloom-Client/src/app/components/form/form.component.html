@@ -1,9 +1,12 @@
-          <!-- Event binding to call method from home.page.ts https://angular.dev/guide/templates/event-listeners -->
-          <form (submit)="onSubmit($event)">
-            <!-- Possible types of data https://www.w3schools.com/html/html_form_input_types.asp -->
-            <!-- Accept attribute https://www.w3schools.com/tags/att_input_accept.asp -->
-            <input type="file" accept="audio/*">
-            <ion-button type="submit">
-              Submit
-            </ion-button>
-          </form>
+<!-- Event binding to call method from home.page.ts https://angular.dev/guide/templates/event-listeners -->
+<form (submit)="onSubmit($event)">
+  <!-- Possible types of data https://www.w3schools.com/html/html_form_input_types.asp -->
+  <!-- Accept attribute https://www.w3schools.com/tags/att_input_accept.asp -->
+  <input type="file" accept="audio/*">
+  <ion-button type="submit">
+    Submit
+  </ion-button>
+</form>
+<div class="drop-zone">
+  Drag and drop files here
+</div>
