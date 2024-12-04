@@ -19,16 +19,7 @@
         </ion-card-header>
 
         <ion-card-content>
-          <!-- Event binding to call method from home.page.ts https://angular.dev/guide/templates/event-listeners -->
-          <form (submit)="onSubmit()">
-            <!-- Possible types of data https://www.w3schools.com/html/html_form_input_types.asp -->
-            <!-- Accept attribute https://www.w3schools.com/tags/att_input_accept.asp -->
-            <input type="file" accept="audio/*">
-            <ion-button type="submit">
-              Submit
-            </ion-button>
-          </form>
-
+          <app-form></app-form>
         </ion-card-content>
       </ion-card>
     </div>
