@@ -6,4 +6,10 @@
     font-size: 16px;
     color: #aaa;
     margin: 20px;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.drop-zone.drag-over {
+    border-color: blue;
+    background-color: aquamarine;
 }

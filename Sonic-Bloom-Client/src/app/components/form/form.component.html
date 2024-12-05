@@ -7,6 +7,16 @@
     Submit
   </ion-button>
 </form>
-<div class="drop-zone">
+
+<!-- Angular's way to trap event into class for css discovered in A.C.P.A.D. module in semester 1 -->
+<!-- [class.drag-over]="isDragOver" -->
+
+<div 
+  class="drop-zone"
+  [class.drag-over]="isDragOver"
+  (dragover)="onDragOver($event)" 
+  (dragleave)="onDragLeave($event)" 
+  (drop)="onDrop($event)">
+
   Drag and drop files here
 </div>
