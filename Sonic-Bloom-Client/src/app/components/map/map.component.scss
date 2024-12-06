@@ -1,4 +1,26 @@
 .expand_content {
     width: 100%;
-    height: 96%;//stay within the ion-card on homepage
+    height: 96%;// stay within the ion-card on homepage
+}
+
+.map-container {
+    // timestamp: 2min 47sec  https://www.youtube.com/watch?v=YEmdHbQBCSQ
+    // explains css position very clearly
+    position: relative; // children css allowed to specify where they are relative to the container
+}
+
+.map {
+    position: absolute;// fixed position based on parent, only one child needs this for them to align however i'd like to leave it on both
+    top: 0;
+    left: 0;
+
+    border: 0;
+}
+
+.canvas-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    pointer-events: none; // so clicks can pass through to the iframe: https://developer.mozilla.org/en-US/docs/Web/CSS/pointer-events
 }
