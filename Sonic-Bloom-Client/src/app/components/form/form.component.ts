@@ -31,7 +31,7 @@ export class FormComponent {
   }
 
   onDragOver(event: Event) {
-    
+
     // stop unintended behaviours
     event.preventDefault();
 
@@ -39,7 +39,7 @@ export class FormComponent {
     // https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Examples#example_5_event_propagation
     event.stopPropagation();
 
-    //changes css mainly
+    // changes css mainly
     this.isDragOver = true;
   }
 
@@ -49,10 +49,20 @@ export class FormComponent {
     this.isDragOver = false;
   }
 
-  onDrop(event: Event) {
+  onDrop(event: DragEvent) {
     event.preventDefault();
     event.stopPropagation();
     this.isDragOver = false;
-  }
 
+    // use dataTransfer to access files from drop
+    // https://developer.mozilla.org/en-US/docs/Web/API/DragEvent/dataTransfer
+    if (event.dataTransfer && event.dataTransfer.files.length > 0) {
+      // access the files
+      const files = event.dataTransfer.files;
+      
+      // log the file name and size for debugging
+      console.log('File dropped:', files);
+    }
+
+  }
 }

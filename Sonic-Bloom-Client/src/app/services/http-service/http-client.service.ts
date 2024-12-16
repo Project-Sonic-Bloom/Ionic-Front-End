@@ -21,4 +21,9 @@ export class HttpClientService {
   get(url: string){
     return this.httpClient.get(url, { responseType: 'text' })//second param specifies what is returned https://angular.dev/guide/http/making-requests 
   }
+
+  //any type until I know how to form the data (probably byte[])
+  post(url: string, payload: any) {
+    return this.httpClient.post(url, payload)
+  }
 }
