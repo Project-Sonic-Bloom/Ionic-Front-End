@@ -9,11 +9,13 @@ import { HttpClientService } from 'src/app/services/http-service/http-client.ser
   standalone: true,
   imports: [IonButton]
 })
+
 export class FormComponent {
 
   // storing files
-  selectedFile: File | null = null;
-  backEnd: string = "http://127.0.0.1:5000/"
+  files: File[] = [];
+  backEnd: string = "http://127.0.0.1:5000/";
+  generateHeatmapEndpoint: string = "GenerateHeatmap";
 
   // trigger when drag DOM events happen
   isDragOver = false;
@@ -24,10 +26,15 @@ export class FormComponent {
   onSubmit(event: Event) {
     event.preventDefault();// stop the submit from refreshing the page (debug purpose)
     // Use subscribe to access observable because it allows for the asynchronous processing required of HttpClient's get method/observable that is returned
-    this.httpClientService.get(this.backEnd).subscribe(
+    this.generateHeatmapPost();
+  }
+
+  generateHeatmapPost(){
+    this.httpClientService.post(this.backEnd + this.generateHeatmapEndpoint, this.files).subscribe(
       (response) => {
         console.log('Data received:', response);
-      })
+      }
+    );
   }
 
   onDragOver(event: Event) {
@@ -59,10 +66,13 @@ export class FormComponent {
     if (event.dataTransfer && event.dataTransfer.files.length > 0) {
       // access the files
       const files = event.dataTransfer.files;
-      
+
+      // take the variable files: FileList and convert to files :File[]
+      // REASONS: for global visibility and to abstract away from the niche drag functionality FileList is associated with
+      this.files = Array.from(files);
+
       // log the file name and size for debugging
       console.log('File dropped:', files);
     }
-
   }
 }
