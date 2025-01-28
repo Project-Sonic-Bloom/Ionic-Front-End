@@ -1,4 +1,5 @@
 import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-map',
@@ -12,6 +13,7 @@ export class MapComponent {
   // https://www.youtube.com/watch?v=uoLzWRZgXiA
   // get the canvas element
   @ViewChild('canvasOverlay') canvasOverlay!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('entireMap') entireMap!: ElementRef<HTMLDivElement>;
 
   constructor() { }
 
@@ -29,6 +31,23 @@ export class MapComponent {
     // canvas logic below found from last year's graphics programming module
     const ctx = canvas.getContext('2d');
   }
+
+  sendMapToBackend() {
+    const entireMap = this.entireMap.nativeElement;
+
+    html2canvas(entireMap).then((canvas) => {
+      // Convert canvas to an image
+      const image = canvas.toDataURL('image/png');
+
+      // Trigger download or preview the image
+      const link = document.createElement('a');
+      link.href = image;
+      link.download = 'map-screenshot.png';
+      link.click();
+    }).catch((error) => {
+      console.error('Error capturing the map:', error);
+    });
+}
 
 
 }
