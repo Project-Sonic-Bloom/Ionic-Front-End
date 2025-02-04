@@ -1,5 +1,4 @@
 import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
-import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-map',
@@ -32,22 +31,10 @@ export class MapComponent {
     const ctx = canvas.getContext('2d');
   }
 
-  sendMapToBackend() {
-    const entireMap = this.entireMap.nativeElement;
+  async screenshotMap() {
+    //send a get request to let the server know it has to take a screenshot
+    
 
-    html2canvas(entireMap).then((canvas) => {
-      // Convert canvas to an image
-      const image = canvas.toDataURL('image/png');
-
-      // Trigger download or preview the image
-      const link = document.createElement('a');
-      link.href = image;
-      link.download = 'map-screenshot.png';
-      link.click();
-    }).catch((error) => {
-      console.error('Error capturing the map:', error);
-    });
-}
-
+  }
 
 }
