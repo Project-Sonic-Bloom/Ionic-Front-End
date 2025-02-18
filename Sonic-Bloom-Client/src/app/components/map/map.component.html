@@ -1,4 +1,4 @@
-<div  class="map-container expand_content">
+<div #entireMap class="map-container expand_content">
     <!-- comments explaining #canvasOverlay inmap.component.ts -->
     <canvas #canvasOverlay class="expand_content canvas-overlay"></canvas>
     <!-- Iframe copy pasted from google maps so loading and refferpolicy is not code written by me -->
@@ -7,4 +7,4 @@
         loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     
 </div>
-<button #entireMap (click)="screenshotMap()">Capture Map</button>
+<button (click)="screenshotMap()">Capture Map</button>

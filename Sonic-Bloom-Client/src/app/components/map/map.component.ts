@@ -1,4 +1,5 @@
 import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { HttpClientService } from 'src/app/services/http-service/http-client.service';
 
 @Component({
   selector: 'app-map',
@@ -14,7 +15,9 @@ export class MapComponent {
   @ViewChild('canvasOverlay') canvasOverlay!: ElementRef<HTMLCanvasElement>;
   @ViewChild('entireMap') entireMap!: ElementRef<HTMLDivElement>;
 
-  constructor() { }
+  backEnd: string = "http://127.0.0.1:5000/";
+
+  constructor(private httpClientService: HttpClientService) { }
 
   // obviously a hook method angular provides https://angular.dev/api/core/AfterViewInit
   ngAfterViewInit() {
@@ -32,9 +35,30 @@ export class MapComponent {
   }
 
   async screenshotMap() {
+    this.saveMap();
+    console.log("sent get")
     //send a get request to let the server know it has to take a screenshot
-    
-
+    this.httpClientService.get(this.backEnd + "GetScreenshot").subscribe(
+      (response) => {
+        console.log(response);
+      }
+    )
   }
+
+  // Function to save the map/canvas div state in cookies
+  saveMap(): void {
+    const map = this.entireMap.nativeElement;
+    if (!map) return;
+
+    const mapState = {
+      html: map.innerHTML, // Save content inside div
+      width: map.clientWidth,
+      height: map.clientHeight,
+      position: map.getBoundingClientRect(), // Position info
+    };
+
+    document.cookie = `mapState=${encodeURIComponent(JSON.stringify(mapState))}; path=/; max-age=86400;`; // 1 day expiry
+  }
+
 
 }
