@@ -19,7 +19,7 @@ env:
   NPM_CONFIG_LOGLEVEL: 'error'
   NG_BUILD_PARALLEL: 'true'
   NG_BUILD_CACHE: 'true'
-  BUILD_PATH: 'www/browser'
+  BUILD_PATH: 'www'
 
 concurrency:
   group: "pages"
