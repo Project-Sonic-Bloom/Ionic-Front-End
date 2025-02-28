@@ -1,12 +1,15 @@
 import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { HttpClientService } from 'src/app/services/http-service/http-client.service';
+// import { GoogleMapsModule } from '@angular/google-maps';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
   standalone: true,
+  // imports: [GoogleMapsModule]
 })
+
 export class MapComponent {
   // really helpful tutorial that helped me gain a deeper understanding of how the @ViewChild decorator & ElementRef class can be used 
   // to get/use an element from the template.
@@ -46,18 +49,33 @@ export class MapComponent {
   }
 
   // Function to save the map/canvas div state in cookies
+  // This is done by extracting a link from the iframe that contains the co-ordinates
   saveMap(): void {
-    const map = this.entireMap.nativeElement;
-    if (!map) return;
 
-    const mapState = {
-      html: map.innerHTML, // Save content inside div
-      width: map.clientWidth,
-      height: map.clientHeight,
-      position: map.getBoundingClientRect(), // Position info
-    };
+    // DOES NOT WORK DUE TO CORS ERROR
 
-    document.cookie = `mapState=${encodeURIComponent(JSON.stringify(mapState))}; path=/; max-age=86400;`; // 1 day expiry
+    // // iterate over all of the elements in the iframe
+    // document.querySelectorAll("iframe").forEach((iframe, index) => {
+    //   // console.log("here")
+    //   try {
+    //     // ensure iframe exists
+    //     const iframeDocument = (iframe as HTMLIFrameElement).contentDocument;
+    //     console.log(`Found ${iframeDocument} iframe`);
+    //     if (iframeDocument) {
+    //       console.log("here")
+
+    //       // find the anchor tag that has the link
+    //       const anchor = iframeDocument.querySelector('.google-maps-link a');
+    //       if (anchor && anchor instanceof HTMLAnchorElement) {
+    //         const url = anchor.href;
+    //         console.log(`URL: ${url}`);
+    //         // You can store the URL in an array or perform another action
+    //       }
+    //     }
+    //   } catch (error) {
+    //     console.error(`Error accessing iframe ${index}:`, error);
+    //   }
+    // });
   }
 
 
