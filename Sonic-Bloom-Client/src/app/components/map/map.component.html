@@ -3,7 +3,7 @@
     <canvas #canvasOverlay class="expand_content canvas-overlay"></canvas>
     <!-- Iframe copy pasted from google maps so loading and refferpolicy is not code written by me -->
     <iframe class="expand_content map"
-        src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2171647.9966421975!2d-8.139694166076957!3d53.38115340393664!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2sie!4v1733287283681!5m2!1sen!2sie"
+        [src]="map_url"
         loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>    
 </div>
 <button (click)="screenshotMap()">Capture Map</button>

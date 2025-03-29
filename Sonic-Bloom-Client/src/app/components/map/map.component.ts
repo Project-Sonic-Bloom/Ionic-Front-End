@@ -1,5 +1,7 @@
 import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { HttpClientService } from 'src/app/services/http-service/http-client.service';
+import { environment } from 'src/environments/environment.prod';
 // import { GoogleMapsModule } from '@angular/google-maps';
 
 @Component({
@@ -11,6 +13,7 @@ import { HttpClientService } from 'src/app/services/http-service/http-client.ser
 })
 
 export class MapComponent {
+  constructor(private httpClientService: HttpClientService, private domSanitizer: DomSanitizer) { }
   // really helpful tutorial that helped me gain a deeper understanding of how the @ViewChild decorator & ElementRef class can be used 
   // to get/use an element from the template.
   // https://www.youtube.com/watch?v=uoLzWRZgXiA
@@ -19,8 +22,9 @@ export class MapComponent {
   @ViewChild('entireMap') entireMap!: ElementRef<HTMLDivElement>;
 
   backEnd: string = "http://127.0.0.1:5000/";
+  // https://v17.angular.io/guide/security#xss sanitize the url to bypass security concerns due to the maps key being a variable and not hardcoded
+  map_url = this.domSanitizer.bypassSecurityTrustResourceUrl("https://www.google.com/maps/embed/v1/view?key="+ environment.maps_key + "&center=53.4297953,-8.4111406&maptype=satellite&zoom=7");
 
-  constructor(private httpClientService: HttpClientService) { }
 
   // obviously a hook method angular provides https://angular.dev/api/core/AfterViewInit
   ngAfterViewInit() {

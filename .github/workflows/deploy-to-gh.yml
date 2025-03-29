@@ -21,6 +21,9 @@ env:
   NG_BUILD_CACHE: 'true'
   BUILD_PATH: 'www'
 
+  # add secret vars
+  MAP_API_KEY: ${{ secrets. MAP_API_KEY}}
+
 concurrency:
   group: "pages"
   cancel-in-progress: true
@@ -135,6 +138,13 @@ jobs:
           
           wait $IONIC_PID
           echo "::endgroup::"
+
+      - name: Add git secret variables to environment.prod.ts
+        run: |
+          echo "export const environment = {" > Sonic-Bloom-Client/src/environments/environment.prod.ts
+          echo "  production: true," > Sonic-Bloom-Client/src/environments/environment.prod.ts
+          echo "  maps_key: 'AIzaSyA-f-VdwRTEbLMjstpWtCBmTOOJyaUxg_U'" >> Sonic-Bloom-Client/src/environments/environment.prod.ts
+          echo "};" >> Sonic-Bloom-Client/src/environments/environment.prod.ts
 
       - name: Build Ionic application
         id: build
