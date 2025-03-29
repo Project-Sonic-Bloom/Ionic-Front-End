@@ -20,7 +20,6 @@ env:
   NG_BUILD_PARALLEL: 'true'
   NG_BUILD_CACHE: 'true'
   BUILD_PATH: 'www'
-  PROD_CONFIG: 'true'
 
   # add secret vars
   MAP_API_KEY: ${{secrets.MAP_API_KEY}}
@@ -134,7 +133,6 @@ jobs:
             --prefer-offline \
             --no-audit \
             --no-fund \
-            --production=true \
             --legacy-peer-deps
           
           wait $IONIC_PID
