@@ -22,7 +22,7 @@ env:
   BUILD_PATH: 'www'
 
   # add secret vars
-  MAP_API_KEY: ${{ secrets. MAP_API_KEY}}
+  MAP_API_KEY: ${{ secrets.MAP_API_KEY}}
 
 concurrency:
   group: "pages"
@@ -143,7 +143,7 @@ jobs:
         run: |
           echo "export const environment = {" > Sonic-Bloom-Client/src/environments/environment.prod.ts
           echo "  production: true," > Sonic-Bloom-Client/src/environments/environment.prod.ts
-          echo "  maps_key: 'AIzaSyA-f-VdwRTEbLMjstpWtCBmTOOJyaUxg_U'" >> Sonic-Bloom-Client/src/environments/environment.prod.ts
+          echo "  maps_key: ${{ secrets.MAP_API_KEY }}" >> Sonic-Bloom-Client/src/environments/environment.prod.ts
           echo "};" >> Sonic-Bloom-Client/src/environments/environment.prod.ts
 
       - name: Build Ionic application
