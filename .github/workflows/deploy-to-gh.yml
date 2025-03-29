@@ -124,7 +124,7 @@ jobs:
           echo "::group::Installing dependencies"
           
           # Install Ionic CLI globally with performance flags
-          npm install -g @ionic/cli @angular/cli
+          npm install -g @ionic/cli --no-audit --no-fund &
           IONIC_PID=$!
           
           cd ${{ env.APP_PATH }}
