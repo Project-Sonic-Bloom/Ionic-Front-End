@@ -1,7 +1,7 @@
 import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { HttpClientService } from 'src/app/services/http-service/http-client.service';
-import { environment } from '../../../environments/environment.prod';
+import { environment } from '../../../environments/environment';
 // import { GoogleMapsModule } from '@angular/google-maps';
 
 @Component({
