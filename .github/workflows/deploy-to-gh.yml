@@ -141,10 +141,10 @@ jobs:
 
       - name: Add git secret variables to environment.prod.ts
         run: |
-          echo "export const environment = {" > src/environments/environment.prod.ts
-          echo "  production: true," > src/environments/environment.prod.ts
-          echo "  maps_key: ${{ secrets.MAP_API_KEY }}" >> src/environments/environment.prod.ts
-          echo "};" >> src/environments/environment.prod.ts
+          echo "export const environment = {" > Sonic-Bloom-Client/src/environments/environment.prod.ts
+          echo "  production: true," > Sonic-Bloom-Client/src/environments/environment.prod.ts
+          echo "  maps_key: '${{ secrets.MAP_API_KEY }}'" >> Sonic-Bloom-Client/src/environments/environment.prod.ts
+          echo "};" >> Sonic-Bloom-Client/src/environments/environment.prod.ts
 
       - name: Build Ionic application
         id: build
