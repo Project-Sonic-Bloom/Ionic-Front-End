@@ -124,27 +124,22 @@ jobs:
           echo "::group::Installing dependencies"
           
           # Install Ionic CLI globally with performance flags
-          npm install -g @ionic/cli --no-audit --no-fund &
+          npm install -g @ionic/cli @angular/cli
           IONIC_PID=$!
           
           cd ${{ env.APP_PATH }}
-          # Install project dependencies with optimizations
-          npm ci \
-            --prefer-offline \
-            --no-audit \
-            --no-fund \
-            --production=false \
-            --legacy-peer-deps
-          
+          npm ci --legacy-peer-deps
+          npm install @angular/cli --save-dev
+
           wait $IONIC_PID
           echo "::endgroup::"
 
       - name: Add git secret variables to environment.prod.ts
         run: |
-          echo "export const environment = {" > Sonic-Bloom-Client/src/environments/environment.ts
-          echo "  production: false," > Sonic-Bloom-Client/src/environments/environment.ts
-          echo "  maps_key: '${{ secrets.MAP_API_KEY }}'" >> Sonic-Bloom-Client/src/environments/environment.ts
-          echo "};" >> Sonic-Bloom-Client/src/environments/environment.ts
+          echo "export const environment = {" > Sonic-Bloom-Client/src/environments/environment.prod.ts
+          echo "  production: true," > Sonic-Bloom-Client/src/environments/environment.prod.ts
+          echo "  maps_key: '${{ secrets.MAP_API_KEY }}'" >> Sonic-Bloom-Client/src/environments/environment.prod.ts
+          echo "};" >> Sonic-Bloom-Client/src/environments/environment.prod.ts
 
       - name: Build Ionic application
         id: build
