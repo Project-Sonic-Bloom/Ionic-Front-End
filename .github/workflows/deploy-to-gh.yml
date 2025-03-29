@@ -142,7 +142,7 @@ jobs:
       - name: Add git secret variables to environment.prod.ts
         run: |
           echo "export const environment = {" > Sonic-Bloom-Client/src/environments/environment.ts
-          echo "  production: true," > Sonic-Bloom-Client/src/environments/environment.ts
+          echo "  production: false," > Sonic-Bloom-Client/src/environments/environment.ts
           echo "  maps_key: '${{ secrets.MAP_API_KEY }}'" >> Sonic-Bloom-Client/src/environments/environment.ts
           echo "};" >> Sonic-Bloom-Client/src/environments/environment.ts
 
