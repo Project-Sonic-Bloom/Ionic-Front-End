@@ -133,7 +133,7 @@ jobs:
             --prefer-offline \
             --no-audit \
             --no-fund \
-            --production=false \
+            --production=true \
             --legacy-peer-deps
           
           wait $IONIC_PID
