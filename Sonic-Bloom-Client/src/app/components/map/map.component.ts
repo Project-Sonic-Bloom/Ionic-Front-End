@@ -1,7 +1,8 @@
 import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { HttpClientService } from 'src/app/services/http-service/http-client.service';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../environments/environment.prod';
+import html2canvas from 'html2canvas';
 // import { GoogleMapsModule } from '@angular/google-maps';
 
 @Component({
@@ -19,11 +20,11 @@ export class MapComponent {
   // https://www.youtube.com/watch?v=uoLzWRZgXiA
   // get the canvas element
   @ViewChild('canvasOverlay') canvasOverlay!: ElementRef<HTMLCanvasElement>;
-  @ViewChild('entireMap') entireMap!: ElementRef<HTMLDivElement>;
+  @ViewChild('map') map!: ElementRef<HTMLDivElement>;
 
   backEnd: string = "http://127.0.0.1:5000/";
-  // https://v17.angular.io/guide/security#xss sanitize the url to bypass security concerns due to the maps key being a variable and not hardcoded
-  map_url = this.domSanitizer.bypassSecurityTrustResourceUrl("https://www.google.com/maps/embed/v1/view?key="+ environment.maps_key + "&center=53.4297953,-8.4111406&maptype=satellite&zoom=7");
+  // https://v17.angular.io/guide/security#xss sanitize the url to bypass security concerns due to the maps key being a variable
+  map_url = this.domSanitizer.bypassSecurityTrustResourceUrl("https://www.google.com/maps/embed/v1/view?key=" + environment.maps_key + "&center=53.4297953,-8.4111406&maptype=satellite&zoom=7");
 
 
   // obviously a hook method angular provides https://angular.dev/api/core/AfterViewInit
@@ -42,14 +43,30 @@ export class MapComponent {
   }
 
   async screenshotMap() {
-    this.saveMap();
-    console.log("sent get")
-    //send a get request to let the server know it has to take a screenshot
-    this.httpClientService.get(this.backEnd + "GetScreenshot").subscribe(
-      (response) => {
-        console.log(response);
-      }
-    )
+    const map = this.map.nativeElement;
+
+    html2canvas(map).then((canvas) => {
+      // Convert canvas to an image
+      const image = canvas.toDataURL('image/png');
+
+      // Trigger download or preview the image
+      const link = document.createElement('a');
+      link.href = image;
+      link.download = 'map-screenshot.png';
+      link.click();
+    }).catch((error) => {
+      console.error('Error capturing the map:', error);
+    });
+
+
+    // this.saveMap();
+    // console.log("sent get")
+    // //send a get request to let the server know it has to take a screenshot
+    // this.httpClientService.get(this.backEnd + "GetScreenshot").subscribe(
+    //   (response) => {
+    //     console.log(response);
+    //   }
+    // )
   }
 
   // Function to save the map/canvas div state in cookies
