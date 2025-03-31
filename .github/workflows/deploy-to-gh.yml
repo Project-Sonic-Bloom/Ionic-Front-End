@@ -119,7 +119,6 @@ jobs:
       - name: Install dependencies
         id: install
         shell: bash
-        # ci| --legacy-peer-deps added because angular wont accept the latest version of fire without it
         run: |
           echo "::group::Installing dependencies"
           
