@@ -3,14 +3,14 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { HttpClientService } from 'src/app/services/http-service/http-client.service';
 import { environment } from '../../../environments/environment.prod';
 import html2canvas from 'html2canvas';
-// import { GoogleMapsModule } from '@angular/google-maps';
+import { GoogleMap, GoogleMapsModule } from '@angular/google-maps';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
   standalone: true,
-  // imports: [GoogleMapsModule]
+  imports: [GoogleMapsModule]
 })
 
 export class MapComponent {
@@ -24,8 +24,9 @@ export class MapComponent {
 
   backEnd: string = "http://127.0.0.1:5000/";
   // https://v17.angular.io/guide/security#xss sanitize the url to bypass security concerns due to the maps key being a variable
-  map_url = this.domSanitizer.bypassSecurityTrustResourceUrl("https://www.google.com/maps/embed/v1/view?key=" + environment.maps_key + "&center=53.4297953,-8.4111406&maptype=satellite&zoom=7");
-
+  // map_url = this.domSanitizer.bypassSecurityTrustResourceUrl("https://www.google.com/maps/embed/v1/view?key=" + environment.maps_key + "&center=53.4297953,-8.4111406&maptype=satellite&zoom=7");
+  map_url = this.domSanitizer.bypassSecurityTrustResourceUrl(environment.maps_key);
+  center: google.maps.LatLngLiteral = { lat: 53.4297953, lng: -6.2603107};
 
   // obviously a hook method angular provides https://angular.dev/api/core/AfterViewInit
   ngAfterViewInit() {
