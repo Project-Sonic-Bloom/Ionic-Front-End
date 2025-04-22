@@ -6,6 +6,21 @@ import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { provideHttpClient } from '@angular/common/http';
 
+import { environment } from './environments/environment.prod';
+
+// where I learned about this alternative method of loading the maps api
+// https://stackoverflow.com/questions/16340529/loading-google-maps-asynchronously
+const loadGoogleMapsApi = () => {
+  const script = document.createElement('script');
+  script.src = 'https://maps.googleapis.com/maps/api/js?key=' + environment.maps_key + '&callback=Function.prototype';
+  script.async = true;
+  script.defer = true;
+  document.head.appendChild(script);
+};
+
+// Load the API before bootstrapping the app
+loadGoogleMapsApi();
+
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
