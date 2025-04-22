@@ -1,2 +1,8 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
+
+/* Force the Google Maps container to respect parent dimensions */
+google-map > div {
+    width: 100% !important;
+    height: 100% !important;
+}

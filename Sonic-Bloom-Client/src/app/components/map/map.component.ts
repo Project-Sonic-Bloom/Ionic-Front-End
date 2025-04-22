@@ -19,14 +19,20 @@ export class MapComponent {
   // to get/use an element from the template.
   // https://www.youtube.com/watch?v=uoLzWRZgXiA
   // get the canvas element
+  @ViewChild(GoogleMap) googleMap!: GoogleMap;//for typescript abilities
   @ViewChild('canvasOverlay') canvasOverlay!: ElementRef<HTMLCanvasElement>;
   @ViewChild('map') map!: ElementRef<HTMLDivElement>;
 
   backEnd: string = "http://127.0.0.1:5000/";
   // https://v17.angular.io/guide/security#xss sanitize the url to bypass security concerns due to the maps key being a variable
   // map_url = this.domSanitizer.bypassSecurityTrustResourceUrl("https://www.google.com/maps/embed/v1/view?key=" + environment.maps_key + "&center=53.4297953,-8.4111406&maptype=satellite&zoom=7");
-  map_url = this.domSanitizer.bypassSecurityTrustResourceUrl(environment.maps_key);
-  center: google.maps.LatLngLiteral = { lat: 53.4297953, lng: -6.2603107};
+  // map_url = this.domSanitizer.bypassSecurityTrustResourceUrl(environment.maps_key);
+
+  // map paramaters
+  center: google.maps.LatLngLiteral = { lat: 53.4356987, lng: -8.5634334};
+  zoom = 7;
+  mapTypeId = google.maps.MapTypeId.HYBRID;
+  
 
   // obviously a hook method angular provides https://angular.dev/api/core/AfterViewInit
   ngAfterViewInit() {

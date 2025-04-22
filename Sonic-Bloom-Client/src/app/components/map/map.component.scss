@@ -3,7 +3,7 @@
     height: 96%;// stay within the ion-card on homepage
 }
 
-.map-container {
+.map_container {
     // timestamp: 2min 47sec  https://www.youtube.com/watch?v=YEmdHbQBCSQ
     // explains css position very clearly
     position: relative; // children css allowed to specify where they are relative to the container
@@ -17,7 +17,7 @@
     border: 0;
 }
 
-.canvas-overlay {
+.canvas_overlay {
     position: absolute;
     top: 0;
     left: 0;
