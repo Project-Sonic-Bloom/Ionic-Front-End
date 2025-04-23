@@ -12,7 +12,7 @@ import { environment } from './environments/environment.prod';
 // https://stackoverflow.com/questions/16340529/loading-google-maps-asynchronously
 const loadGoogleMapsApi = () => {
   const script = document.createElement('script');
-  script.src = 'https://maps.googleapis.com/maps/api/js?key=' + environment.maps_key + '&callback=Function.prototype';
+  script.src = 'https://maps.googleapis.com/maps/api/js?key=' + environment.maps_key + '&libraries=marker&callback=Function.prototype&map_ids=13f868347395f4d9';
   script.async = true;
   script.defer = true;
   document.head.appendChild(script);

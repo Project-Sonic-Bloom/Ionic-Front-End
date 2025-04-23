@@ -4,13 +4,14 @@ import { HttpClientService } from 'src/app/services/http-service/http-client.ser
 import { environment } from '../../../environments/environment.prod';
 import html2canvas from 'html2canvas';
 import { GoogleMap, GoogleMapsModule } from '@angular/google-maps';
+import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
   standalone: true,
-  imports: [GoogleMapsModule]
+  imports: [GoogleMapsModule, NgFor]
 })
 
 export class MapComponent {
@@ -29,14 +30,24 @@ export class MapComponent {
   // map_url = this.domSanitizer.bypassSecurityTrustResourceUrl(environment.maps_key);
 
   // map paramaters
-  center: google.maps.LatLngLiteral = { lat: 53.4356987, lng: -8.5634334};
-  zoom = 7;
-  mapTypeId = google.maps.MapTypeId.HYBRID;
-  
+  // center: google.maps.LatLngLiteral = { lat: 53.4356987, lng: -8.5634334 };
+  // zoom = 7;
+  // mapTypeId = google.maps.MapTypeId.HYBRID;
+  // markers: any[] = [];
+  marker: any;
+
+  options: google.maps.MapOptions = {
+    mapTypeId: google.maps.MapTypeId.HYBRID,
+    mapId: '13f868347395f4d9',
+    center: { lat: 53.4356987, lng: -8.5634334 },
+    zoom: 7,
+    disableDefaultUI: false
+  };
 
   // obviously a hook method angular provides https://angular.dev/api/core/AfterViewInit
   ngAfterViewInit() {
     this.initCanvas();
+    this.initMap();
   }
 
   initCanvas() {
@@ -47,6 +58,74 @@ export class MapComponent {
 
     // canvas logic below found from last year's graphics programming module
     const ctx = canvas.getContext('2d');
+  }
+
+  initMap() {
+    // Get the map DOM element
+    const mapElement = this.googleMap.googleMap!.getDiv();
+
+    // Prevent default drag behavior
+    mapElement.addEventListener('dragover', (event: DragEvent) => {
+      event.preventDefault();
+      event.stopPropagation();
+    });
+
+    // Handle drop event
+    mapElement.addEventListener('drop', (event: DragEvent) => {
+      event.preventDefault();
+      event.stopPropagation();
+      this.handleFileDrop(event);
+    });
+  }
+
+  handleFileDrop(event: DragEvent) {
+    const files = event.dataTransfer?.files;
+    if (!files || files.length === 0) return;
+    
+    // Prevent default browser behavior
+    event.preventDefault();
+    
+    // Get the map container and its position
+    const mapDiv = this.googleMap.googleMap!.getDiv();
+    const mapRect = mapDiv.getBoundingClientRect();
+    
+    // Create a point at the drop location relative to the map container
+    const x = event.clientX - mapRect.left;
+    const y = event.clientY - mapRect.top;
+    
+    // Use the Maps API to convert point to lat/lng
+    const point = new google.maps.Point(x, y);
+    
+    // We need to use the overlay projection
+    const overlay = new google.maps.OverlayView();
+    overlay.setMap(this.googleMap.googleMap!);
+    
+    overlay.draw = () => {}; // Empty draw method required
+    
+    overlay.onAdd = () => {
+      const projection = overlay.getProjection();
+      const latLng = projection.fromContainerPixelToLatLng(point);
+
+      if (!latLng) return;
+
+      console.log("Dropped at coordinates:", latLng.lat(), latLng.lng());
+      
+      // Add marker at the drop position
+      this.addAdvancedMarker(latLng, files[0].name);
+    };
+  }
+  
+  async addAdvancedMarker(position: any, title: string) {
+    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
+
+    console.log(position, title)
+
+    this.marker = new AdvancedMarkerElement({
+      map: this.googleMap.googleMap,
+      position: position,
+      title: title,
+      gmpClickable: true
+    });    
   }
 
   async screenshotMap() {

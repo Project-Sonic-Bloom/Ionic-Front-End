@@ -5,12 +5,11 @@
     <!-- <iframe class="expand_content map" [src]="map_url" loading="lazy"
         referrerpolicy="no-referrer-when-downgrade"></iframe> -->
 
-    
     <!-- add google maps api key -->
     <!-- <script [src]="map_url">
         google.maps.importLibrary("maps");
         google.maps.importLibrary("marker");
     </script> -->
-    <google-map class="expand_content map" [center]="center" [zoom]="zoom" [mapTypeId]="mapTypeId"></google-map>
+    <google-map class="expand_content map" [options]="options"></google-map>
 </div>
 <button (click)="screenshotMap()">Capture Map</button>
