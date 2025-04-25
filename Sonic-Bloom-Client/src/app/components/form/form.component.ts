@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IonButton } from '@ionic/angular/standalone';
 import { HttpClientService } from 'src/app/services/http-service/http-client.service';
+import { FileService } from 'src/app/services/file-service/file.service';
 
 @Component({
   selector: 'app-form',
@@ -21,7 +22,7 @@ export class FormComponent {
   isDragOver = false;
 
 
-  constructor(private httpClientService: HttpClientService) { }
+  constructor(private httpClientService: HttpClientService, private fileService: FileService) { }
 
   onSubmit(event: Event) {
     event.preventDefault();// stop the submit from refreshing the page (debug purpose)
