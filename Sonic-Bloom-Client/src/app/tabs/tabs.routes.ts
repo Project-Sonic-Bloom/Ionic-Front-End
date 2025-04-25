@@ -12,11 +12,6 @@ export const routes: Routes = [
           import('../home/home.page').then((m) => m.HomePage),
       },
       {
-        path: 'forums',
-        loadComponent: () =>
-          import('../forums/forums.page').then((m) => m.ForumsPage),
-      },
-      {
         path: '',
         redirectTo: '/tabs/home',
         pathMatch: 'full',

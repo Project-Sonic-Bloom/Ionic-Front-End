@@ -124,6 +124,7 @@ export class MapComponent {
       map: this.googleMap.googleMap,
       position: position,
       title: title,
+      gmpDraggable: true,
       gmpClickable: true
     });    
   }
