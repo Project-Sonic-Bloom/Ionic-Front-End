@@ -13,14 +13,12 @@ import { FileService } from 'src/app/services/file-service/file.service';
 
 export class FormComponent {
 
-  // storing files
-  files: File[] = [];
+  // Server address 
   backEnd: string = "http://127.0.0.1:5000/";
   generateHeatmapEndpoint: string = "GenerateHeatmap";
 
   // trigger when drag DOM events happen
   isDragOver = false;
-
 
   constructor(private httpClientService: HttpClientService, private fileService: FileService) { }
 
@@ -31,7 +29,14 @@ export class FormComponent {
   }
 
   generateHeatmapPost(){
-    this.httpClientService.post(this.backEnd + this.generateHeatmapEndpoint, this.files).subscribe(
+    const formData = new FormData();
+    
+    // Any files added to the formService by the drop event to the map must be accounted for
+    this.fileService.files$.subscribe(files => {
+      files.forEach(({ file }) => formData.append('files', file));
+    });
+
+    this.httpClientService.post(this.backEnd + this.generateHeatmapEndpoint, formData).subscribe(
       (response) => {
         console.log('Data received:', response);
       }
@@ -62,18 +67,10 @@ export class FormComponent {
     event.stopPropagation();
     this.isDragOver = false;
 
-    // use dataTransfer to access files from drop
-    // https://developer.mozilla.org/en-US/docs/Web/API/DragEvent/dataTransfer
-    if (event.dataTransfer && event.dataTransfer.files.length > 0) {
-      // access the files
-      const files = event.dataTransfer.files;
-
-      // take the variable files: FileList and convert to files :File[]
-      // REASONS: for global visibility and to abstract away from the niche drag functionality FileList is associated with
-      this.files = Array.from(files);
-
-      // log the file name and size for debugging
-      console.log('File dropped:', files);
+    if (event.dataTransfer?.files?.length) {// if there are files to process
+      Array.from(event.dataTransfer.files).forEach(file => {
+        this.fileService.addFile(file); // Store the files in the fileService
+      });
     }
   }
 }
