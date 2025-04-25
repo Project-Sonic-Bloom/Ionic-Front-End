@@ -111,21 +111,25 @@ export class MapComponent {
       console.log("Dropped at coordinates:", latLng.lat(), latLng.lng());
       
       // Add marker at the drop position
-      this.addAdvancedMarker(latLng, files[0].name);
+      this.addMarker(latLng, files[0].name);
     };
   }
   
-  async addAdvancedMarker(position: any, title: string) {
-    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
+  async addMarker(position: any, title: string) {
+    const { Marker } = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
 
     console.log(position, title)
 
-    this.marker = new AdvancedMarkerElement({
+    this.marker = new Marker({
       map: this.googleMap.googleMap,
       position: position,
-      title: title,
-      gmpDraggable: true,
-      gmpClickable: true
+      label: {
+        text: title,
+        color: "white",
+        fontWeight: "bold",
+        fontSize: "16px"
+      },
+      draggable: true
     });    
   }
 
