@@ -1,6 +1,7 @@
 import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { HttpClientService } from 'src/app/services/http-service/http-client.service';
+import { FileService } from 'src/app/services/file-service/file.service';
 import { environment } from '../../../environments/environment.prod';
 import { GoogleMap, GoogleMapsModule } from '@angular/google-maps';
 import { NgFor } from '@angular/common';
@@ -14,7 +15,7 @@ import { NgFor } from '@angular/common';
 })
 
 export class MapComponent {
-  constructor(private httpClientService: HttpClientService, private domSanitizer: DomSanitizer) { }
+  constructor(private httpClientService: HttpClientService, private fileService: FileService) { }
   // really helpful tutorial that helped me gain a deeper understanding of how the @ViewChild decorator & ElementRef class can be used 
   // to get/use an element from the template.
   // https://www.youtube.com/watch?v=uoLzWRZgXiA
@@ -25,7 +26,7 @@ export class MapComponent {
   backEnd: string = "http://127.0.0.1:5000/";
 
   // Make the map
-  marker: any;
+  markers: any[] = [];
   options: google.maps.MapOptions = {
     mapTypeId: google.maps.MapTypeId.HYBRID,
     mapId: '13f868347395f4d9',
@@ -37,6 +38,7 @@ export class MapComponent {
   // hook method angular provides https://angular.dev/api/core/AfterViewInit
   ngAfterViewInit() {
     this.initMap();
+    this.setupFileListeners();
   }
 
   initMap() {
@@ -54,6 +56,22 @@ export class MapComponent {
       event.preventDefault();
       event.stopPropagation();
       this.handleFileDrop(event);
+    });
+  }
+
+  private setupFileListeners() {
+    this.fileService.files$.subscribe(files => {
+      // Clear existing markers
+      this.markers.forEach(marker => marker.setMap(null));
+      this.markers = [];
+
+      // Add markers for files added via form component to the center of the map
+      files.forEach(({ file, position }) => {
+        this.addMarker(
+          position || this.options.center!, 
+          file.name
+        );
+      });
     });
   }
 
@@ -99,7 +117,7 @@ export class MapComponent {
 
     console.log(position, title)
 
-    this.marker = new Marker({
+    const marker = new Marker({
       map: this.googleMap.googleMap,
       position: position,
       label: {
@@ -109,7 +127,21 @@ export class MapComponent {
         fontSize: "16px"
       },
       draggable: true
-    });    
+    });
+
+    marker.addListener('dragend', (event: google.maps.MapMouseEvent) => {
+      this.updateFilePosition(title, event.latLng!.toJSON());
+    });
+
+    this.markers.push(marker);
+  }
+
+  private updateFilePosition(fileName: string, newPosition: google.maps.LatLngLiteral) {
+    const files = this.fileService.filesSubject.value;
+    const updated = files.map(f => 
+      f.file.name === fileName ? { ...f, position: newPosition } : f
+    );
+    this.fileService.filesSubject.next(updated);
   }
 
   async screenshotMap() {

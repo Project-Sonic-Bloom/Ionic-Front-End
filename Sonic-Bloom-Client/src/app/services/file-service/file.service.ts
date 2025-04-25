@@ -12,7 +12,7 @@ export interface MapFile {
 })
 
 export class FileService {
-  private filesSubject = new BehaviorSubject<MapFile[]>([]);
+  public filesSubject = new BehaviorSubject<MapFile[]>([]);
   files$ = this.filesSubject.asObservable();
 
   addFile(file: File, position?: google.maps.LatLngLiteral) {
