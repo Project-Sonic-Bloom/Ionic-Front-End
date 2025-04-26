@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { IonButton } from '@ionic/angular/standalone';
 import { HttpClientService } from 'src/app/services/http-service/http-client.service';
 import { FileService } from 'src/app/services/file-service/file.service';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss'],
   standalone: true,
-  imports: [IonButton]
+  imports: [IonButton, NgIf, NgFor, AsyncPipe]
 })
 
 export class FormComponent {
@@ -20,7 +21,7 @@ export class FormComponent {
   // trigger when drag DOM events happen
   isDragOver = false;
 
-  constructor(private httpClientService: HttpClientService, private fileService: FileService) { }
+  constructor(private httpClientService: HttpClientService, public fileService: FileService) { }
 
   onSubmit(event: Event) {
     event.preventDefault();// stop the submit from refreshing the page (debug purpose)

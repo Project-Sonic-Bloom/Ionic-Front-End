@@ -2,7 +2,7 @@
 <form (submit)="onSubmit($event)">
   <!-- Possible types of data https://www.w3schools.com/html/html_form_input_types.asp -->
   <!-- Accept attribute https://www.w3schools.com/tags/att_input_accept.asp -->
-  <input type="file" accept="audio/*">
+  <input type="file" accept=".csv text/csv">
   <ion-button type="submit">
     Submit
   </ion-button>
@@ -18,5 +18,15 @@
   (dragleave)="onDragLeave($event)" 
   (drop)="onDrop($event)">
 
-  Drag and drop files here
+  <div class="file-list">
+    <div *ngIf="(fileService.files$ | async)?.length; else promptText">
+      <div *ngFor="let file of fileService.files$ | async" class="file-item">
+        {{ file.file.name }}
+      </div>
+    </div>
+    
+    <ng-template #promptText>
+      Drag & drop files here<br>or click to select
+    </ng-template>
+  </div>
 </div>
