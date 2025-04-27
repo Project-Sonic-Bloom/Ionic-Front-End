@@ -1,5 +1,8 @@
 # Ionic-Front-End
 
+### Entire project system architecture
+![Final Year Project - Updated System architecture](https://github.com/user-attachments/assets/ad12e301-1f62-47b6-9c84-c940b18fe6f8)
+
 ## Quick start guide to runnig the app
 
 ### Prerequisites
@@ -26,12 +29,12 @@ Then create the file environments.prod.ts with the contents:
 > export const environment = {
 >  production: true,
 >  
->  maps_key: ''//put your google cloud API in here
+>  maps_key: 'placeholder'     <---- //Replace placehoder with your google cloud API in here
 > };
 
 Now open Ionic-Front-End\Sonic-Bloom-Client\src\main.ts
 edit the line:
-> script.src = 'https://maps.googleapis.com/maps/api/js?key=' + environment.maps_key + '&libraries=marker&callback=Function.prototype&map_ids=';//put your map ID between =' at the end.
+> script.src = 'https://maps.googleapis.com/maps/api/js?key=' + environment.maps_key + '&libraries=marker&callback=Function.prototype&map_ids=placeholder';    //Replace placeholder with your mapID
 
 ### Install dependencies
 > cd ./Sonic-Bloom-Client
